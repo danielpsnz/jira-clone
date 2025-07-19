@@ -22,6 +22,8 @@ const formSchema = z.object({
 });
 
 export const SignInCard = () => {
+  
+  // Initialize the form with zod validation
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,9 +32,11 @@ export const SignInCard = () => {
     },
   });
 
+  // Handle form submission
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log({ values });
   };
+
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
