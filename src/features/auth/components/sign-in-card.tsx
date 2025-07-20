@@ -17,15 +17,15 @@ import {
 } from "@/components/ui/form";
 import Link from "next/link";
 
-const formSchema = z.object({
-  email: z.email(),
-  password: z.string().min(1, "Required"),
-});
+import { loginSchema } from "../schema";
+import { useLogin } from "../api/use-login";
 
 export const SignInCard = () => {
+  const { mutate } = useLogin();
+
   // Initialize the form with zod validation
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -33,7 +33,18 @@ export const SignInCard = () => {
   });
 
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate(
+      { json: values },
+      {
+        onSuccess: (data) => {
+          console.log("Login successful:", data);
+        },
+        onError: (error) => {
+          console.error("Login failed:", error);
+        },
+      }
+    );
     console.log({ values });
   };
 
