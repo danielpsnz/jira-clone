@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 
-import { loginSchema } from "../schema";
+import { loginSchema, signUpSchema } from "../schema";
 
 const app = new Hono()
   .post("/login", zValidator("json", loginSchema), (c) => {
@@ -12,9 +12,12 @@ const app = new Hono()
     
     return c.json({ email, password, message: "Login successful" });
   })
-  .post("/auth/signup", async (c) => {
-    // Handle signup logic here
-    return c.json({ message: "Signup successful" });
+  .post("/register", zValidator("json", signUpSchema), (c) => {
+    // Handle register logic here
+    const { name, email, password } = c.req.valid("json");
+    console.log("Register attempt with:", { name, email, password });
+    
+    return c.json({ name, email, password, message: "Register successful" });
   })
   .get("/auth/logout", async (c) => {
     // Handle logout logic here
