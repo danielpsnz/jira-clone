@@ -19,8 +19,10 @@ import Link from "next/link";
 
 import { loginSchema } from "../schema";
 import { useLogin } from "../api/use-login";
+import { useRouter } from "next/navigation";
 
 export const SignInCard = () => {
+  const router = useRouter();
   const { mutate } = useLogin();
 
   // Initialize the form with zod validation
@@ -39,6 +41,7 @@ export const SignInCard = () => {
       {
         onSuccess: (data) => {
           console.log("Login successful:", data);
+          router.push("/");
         },
         onError: (error) => {
           console.error("Login failed:", error);
