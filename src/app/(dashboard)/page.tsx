@@ -10,9 +10,5 @@ export default async function Home() {
     redirect("/sign-in");
   }
 
-  return (
-    <div>
-      <UserButton />
-    </div>
-  );
+  return <div>This is a home page</div>;
 }
