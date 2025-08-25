@@ -1,3 +1,5 @@
+"use client";
+
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -27,7 +29,7 @@ import { signUpSchema } from "../schema";
 import { useRegister } from "../api/use-register";
 
 export const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   // Initialize the form with zod validation
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -41,18 +43,7 @@ export const SignUpCard = () => {
 
   // Handle form submission
   const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    mutate(
-      { json: values },
-      {
-        onSuccess: (data) => {
-          console.log("Register successful:", data);
-        },
-        onError: (error) => {
-          console.error("Register failed:", error);
-        },
-      }
-    );
-    console.log({ values });
+    mutate({ json: values });
   };
 
   return (
@@ -126,7 +117,7 @@ export const SignUpCard = () => {
               )}
             />
 
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Create account
             </Button>
           </form>
@@ -137,7 +128,7 @@ export const SignUpCard = () => {
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
-          disabled={false}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"
@@ -146,7 +137,7 @@ export const SignUpCard = () => {
           Login with Google
         </Button>
         <Button
-          disabled={false}
+          disabled={isPending}
           variant="secondary"
           size="lg"
           className="w-full"

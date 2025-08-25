@@ -1,1 +1,1 @@
-export const AUTH_COOKIE = "scrumly-scrumly-session";
+export const AUTH_COOKIE = "jira-clone-jira-clone-session";
