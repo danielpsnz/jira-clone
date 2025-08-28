@@ -45,7 +45,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
     const finalValues = {
       ...values,
-      image: values.image instanceof File ? values.image : "",
+      image: values.image ? values.image : "",
     };
 
     mutate(
@@ -110,7 +110,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                             fill
                             className="object-cover"
                             src={
-                              field.value instanceof File
+                              field.value
                                 ? URL.createObjectURL(field.value)
                                 : field.value
                             }
